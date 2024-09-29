@@ -1,0 +1,37 @@
+<div class="flashcard-container">
+  @if (!isEditing) {
+    <div class="flashcard" [class.flipped]="isFlipped" (click)="flipCard()">
+      <div class="front">
+        <h3>{{ card.question }}</h3>
+      </div>
+      <div class="back">
+        <p>{{ card.answer }}</p>
+      </div>
+    </div>
+  }
+
+  @if (isEditing) {
+    <div class="edit-form">
+      <form (ngSubmit)="saveEdit()">
+        <div>
+          <label for="question">Frage:</label>
+          <input type="text" id="question" [(ngModel)]="editableCard.question" name="question">
+        </div>
+        <div>
+          <label for="answer">Antwort:</label>
+          <textarea id="answer" [(ngModel)]="editableCard.answer" name="answer"></textarea>
+        </div>
+        <button class="btnswitch" type="submit">Speichern</button>
+        <button type="button" (click)="cancelEdit()">Abbrechen</button>
+      </form>
+    </div>
+  }
+
+  @if (!isEditing) {
+    <div class="navigation">
+      <button class="btnswitch" (click)="previousCard()" [disabled]="currentIndex === 0">← Previous</button>
+      <button class="btnswitch" (click)="editCard()">Bearbeiten</button>
+      <button class="btnswitch" (click)="nextCard()" [disabled]="currentIndex === flashcards.length - 1">Next →</button>
+    </div>
+  }
+</div>
